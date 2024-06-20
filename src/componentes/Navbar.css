@@ -1,0 +1,23 @@
+.custom-navbar {
+    background-color: #ff5722;
+    padding: 10px 20px;
+}
+
+.navbar-logo {
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar-link {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar-link:hover {
+    color: #ffd700;
+    text-decoration: underline;
+}
