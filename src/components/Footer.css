@@ -1,0 +1,10 @@
+/* src/components/Footer.css */
+
+/* Ejemplo de estilos personalizados */
+footer {
+    background-color: #343a40; /* Bootstrap's bg-dark color */
+    color: #fff; /* Bootstrap's text-white color */
+    text-align: center;
+    padding: 1rem 0;
+  }
+  
