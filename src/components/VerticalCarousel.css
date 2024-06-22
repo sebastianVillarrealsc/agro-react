@@ -1,0 +1,16 @@
+/* VerticalCarousel.css */
+
+/* Aquí puedes agregar bordes y otros estilos para el carrusel vertical */
+.vertical-carousel .carousel-item img {
+  border: 2px solid #ddd; /* Ejemplo de borde */
+  border-radius: 8px; /* Ejemplo de bordes redondeados */
+}
+
+.vertical-carousel .carousel-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-carousel .carousel-item {
+  flex: 0 0 auto;
+}
