@@ -33,6 +33,13 @@ const AdvertisementCarousel = () => {
             alt="Publicidad 3"
           />
         </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={process.env.PUBLIC_URL + '/assets/Servicios/Drone1.jpg'}
+            alt="Publicidad 2"
+          />
+        </Carousel.Item>
         {/* Agrega más elementos del carrusel aquí */}
       </Carousel>
     </div>
