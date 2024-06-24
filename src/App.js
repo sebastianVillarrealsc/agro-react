@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavigationBar from './components/Navbar';
 import AdvertisementCarousel from './components/Carousel';
 import Footer from './components/Footer';
-import RegisterForm from './components/RegisterForm'; // Importa el formulario de registro
+import RegisterForm from './components/RegisterForm';
 import Cards from './components/Cards';
+// src/index.js o src/App.js
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-
 function App() {
   return (
     <Router>
@@ -26,7 +27,7 @@ function App() {
             />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/login" element={<h2>esta pagina queda libre </h2>} />
-            <Route path="/services" element={<h2>Cards</h2>} />
+            <Route path="/services" element={<Cards />} />
           </Routes>
         </main>
         <Footer />
@@ -34,5 +35,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

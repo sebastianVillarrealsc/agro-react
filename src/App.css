@@ -1,13 +1,30 @@
 /* App.css */
 .home-page {
-  background-color: rgb(0, 255, 21);
+  background-color: rgb(2, 78, 9);
   padding: 20px;
+}
+
+@keyframes colorChange {
+  0% { color: #fbfbfb; }
+  50% { color: #fcfe7b; }
+  100% { color: #000000; }
+}
+h1 {
+  font-family: 'Arial', sans-serif;
+  animation: colorChange 3s infinite; /* Añade una animación que cambia el color */
+  color: #ffffff;
+  border: 2px solid #000; /* Añade un borde */
+  padding: 10px; /* Añade espacio interno */
+  text-shadow: 2px 2px 5px #aaa; /* Añade sombra al texto */
+  text-align: center;
 }
 
 .carousel-container {
   max-width: 800px;
   margin: 0 auto;
 }
+
+
 
 
 

@@ -1,6 +1,5 @@
 // src/components/Cards.js
 import React from 'react';
-
 function Cards() {
   return (
     <div className="card" style={{ width: '18rem' }}>
@@ -16,5 +15,4 @@ function Cards() {
     </div>
   );
 }
-
 export default Cards;
