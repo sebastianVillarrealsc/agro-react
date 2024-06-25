@@ -1,10 +1,10 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import './Carousel.css';
+import './AdvertisementCarousel.css'; // Importamos el archivo CSS para estilos adicionales
 
 const AdvertisementCarousel = () => {
   return (
-    <div className="carousel-container">
+    <div className="col-md-8"> {/* Contenedor del carrusel horizontal ocupando 8 columnas */}
       <Carousel>
         <Carousel.Item>
           <img
@@ -40,11 +40,9 @@ const AdvertisementCarousel = () => {
             alt="Publicidad 2"
           />
         </Carousel.Item>
-        {/* Agrega más elementos del carrusel aquí */}
       </Carousel>
     </div>
   );
 };
 
 export default AdvertisementCarousel;
-

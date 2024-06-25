@@ -1,0 +1,8 @@
+/* AdvertisementCarousel.css */
+
+/* Aquí puedes agregar bordes y otros estilos para el carrusel horizontal */
+.carousel-item img {
+    border: 2px solid #ddd; /* Ejemplo de borde */
+    border-radius: 8px; /* Ejemplo de bordes redondeados */
+  }
+  
