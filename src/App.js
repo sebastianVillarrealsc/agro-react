@@ -6,9 +6,7 @@ import VerticalCarousel from './components/VerticalCarousel'; // Importamos el c
 import Footer from './components/Footer';
 import RegisterForm from './components/RegisterForm';
 import Cards from './components/Cards';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-
 function App() {
   return (
     <Router>
@@ -32,8 +30,8 @@ function App() {
               }
             />
             <Route path="/register" element={<RegisterForm />} />
-            <Route path="/login" element={<h2>esta pagina queda libre</h2>} />
-            <Route path="/services" element={<Cards />} />
+            <Route path="/login" element={<h2>esta pagina queda libre </h2>} />
+            <Route path="/services" element={<h2>Cards</h2>} />
           </Routes>
         </main>
         <Footer />
@@ -41,5 +39,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

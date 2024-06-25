@@ -1,5 +1,4 @@
 import React from 'react';
-
 function Cards() {
   // Datos de ejemplo para las tarjetas
   const cardData = [
@@ -38,6 +37,5 @@ function Cards() {
     </div>
   );
 }
-
 export default Cards;
 

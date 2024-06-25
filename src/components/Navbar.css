@@ -1,12 +1,14 @@
 .custom-navbar {
-    background-color: #ff5722;
+    background-color: #26ff00;
     padding: 10px 20px;
+    text-align:right;
 }
 
 .navbar-logo {
     font-size: 24px;
     color: white;
     text-decoration: none;
+    text-align: right;
     font-weight: bold;
 }
 
@@ -20,4 +22,9 @@
 .navbar-link:hover {
     color: #ffd700;
     text-decoration: underline;
+}
+
+.mr-auto
+{
+    text-align: right;
 }
