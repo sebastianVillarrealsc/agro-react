@@ -3,6 +3,10 @@
   background-color: rgb(2, 78, 9);
   padding: 20px;
 }
+.services-page{
+  background-color: rgb(2, 78, 9);
+}
+
 
 @keyframes colorChange {
   0% { color: #fbfbfb; }

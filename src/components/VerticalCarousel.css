@@ -4,6 +4,8 @@
 .vertical-carousel .carousel-item img {
   border: 2px solid #ddd; /* Ejemplo de borde */
   border-radius: 8px; /* Ejemplo de bordes redondeados */
+  max-width: 100%; /* Asegura que las imágenes se adapten al ancho del contenedor */
+  height: auto; /* Mantiene la proporción de las imágenes */
 }
 
 .vertical-carousel .carousel-inner {
