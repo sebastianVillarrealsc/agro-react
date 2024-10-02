@@ -5,10 +5,9 @@ import AdvertisementCarousel from './components/AdvertisementCarousel';
 import VerticalCarousel from './components/VerticalCarousel';
 import Footer from './components/Footer';
 import RegisterForm from './components/RegisterForm';
-import Cards from './components/Cards';
+import Cards from './components/Cards'; // Cards va a manejar el fetch
 import TextColumns from './components/TextColumns';
-import StarPopup from './components/Popup'; // Importamos el popup
-
+import StarPopup from './components/Popup'; 
 import './App.css';
 
 function App() {
@@ -17,7 +16,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowPopup(true);
-    }, 5000); // Muestra el popup después de 5 segundos
+    }, 5000); 
 
     return () => clearTimeout(timer);
   }, []);
@@ -52,13 +51,14 @@ function App() {
               }
             />
             <Route path="/register" element={<RegisterForm />} />
-            <Route path="/login" element={<h2>esta pagina queda libre</h2>} />
+            <Route path="/login" element={<h2>Esta página queda libre</h2>} />
             <Route
               path="/services"
               element={
                 <div className="services-page">
                   <div className="container">
                     <div className="row">
+                      {/* Mostrar las Cards obtenidas mediante fetch */}
                       <Cards />
                     </div>
                   </div>
