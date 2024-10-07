@@ -1,34 +1,49 @@
+
 /* App.css */
-.home-page {
-  background-color: rgb(2, 78, 9);
-  padding: 20px;
-}
-.services-page{
-  background-color: rgb(2, 78, 9);
-}
-
-
-@keyframes colorChange {
-  0% { color: #fbfbfb; }
-  50% { color: #fcfe7b; }
-  100% { color: #000000; }
-}
-h1 {
+body {
+  background-color: #f4f4f4;
   font-family: 'Arial', sans-serif;
-  animation: colorChange 3s infinite; /* Añade una animación que cambia el color */
-  color: #ffffff;
-  border: 2px solid #000; /* Añade un borde */
-  padding: 10px; /* Añade espacio interno */
-  text-shadow: 2px 2px 5px #aaa; /* Añade sombra al texto */
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.home-page, .services-page {
+  background-color: #ffffff;
+  padding: 40px;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.5em;
+  color: #333;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .carousel-container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-radius: 10px;
 }
 
+.btn-primary {
+  background-color: #28a745;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: #fff;
+  transition: background-color 0.3s ease-in-out;
+}
 
+.btn-primary:hover {
+  background-color: #218838;
+}
 
-
+@keyframes subtleFade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
