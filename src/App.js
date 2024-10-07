@@ -1,28 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavigationBar from './components/Navbar';
 import AdvertisementCarousel from './components/AdvertisementCarousel';
 import VerticalCarousel from './components/VerticalCarousel';
 import Footer from './components/Footer';
-import RegisterForm from './components/RegisterForm';
-import Cards from './components/Cards'; // Cards va a manejar el fetch
+import RegisterForm from './components/RegisterForm'; // Importamos el formulario de registro
+import Cards from './components/Cards';
 import TextColumns from './components/TextColumns';
-import StarPopup from './components/Popup'; 
+import StarPopup from './components/Popup';
 import './App.css';
 
 function App() {
-  const [showPopup, setShowPopup] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPopup(true);
-    }, 5000); 
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleClose = () => setShowPopup(false);
-
   return (
     <Router>
       <div className="App d-flex flex-column min-vh-100">
@@ -46,11 +34,11 @@ function App() {
                     </div>
                   </div>
                   <TextColumns />
-                  <StarPopup show={showPopup} handleClose={handleClose} />
+                  <StarPopup />
                 </div>
               }
             />
-            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/register" element={<RegisterForm />} /> {/* Ruta para el formulario */}
             <Route path="/login" element={<h2>Esta página queda libre</h2>} />
             <Route
               path="/services"
@@ -58,7 +46,6 @@ function App() {
                 <div className="services-page">
                   <div className="container">
                     <div className="row">
-                      {/* Mostrar las Cards obtenidas mediante fetch */}
                       <Cards />
                     </div>
                   </div>
