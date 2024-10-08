@@ -1,29 +1,113 @@
-// src/components/RegisterForm.js
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function RegisterForm() {
+  const [formData, setFormData] = useState({
+    nombre: '',
+    apellido: '',
+    email: '',
+    telefono: '',
+    empresa: '',
+    ciudad: '',
+  });
+
+  const [message, setMessage] = useState('');
+
+  // Manejar los cambios en los campos del formulario
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // Manejar el envío del formulario
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3000/usuarios', formData); // Cambia el puerto si es necesario
+      setMessage('Usuario registrado exitosamente.');
+      setFormData({
+        nombre: '',
+        apellido: '',
+        email: '',
+        telefono: '',
+        empresa: '',
+        ciudad: '',
+      }); // Reiniciar el formulario
+    } catch (error) {
+      setMessage('Error al registrar el usuario.');
+      console.error('Error al registrar usuario:', error);
+    }
+  };
+
   return (
-    <div className="d-flex justify-content-center align-items-center min-vh-100" style={{ backgroundColor: '#d4edda' }}>
-      <div className="card p-4" style={{ width: '100%', maxWidth: '500px', backgroundColor: '#e9ecef' }}>
-        <h2 className="text-center mb-4">Registro</h2>
-        <form>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">Nombre</label>
-            <input type="text" className="form-control" id="name" required />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Correo Electrónico</label>
-            <input type="email" className="form-control" id="email" required />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Contraseña</label>
-            <input type="password" className="form-control" id="password" required />
-          </div>
-          <div className="d-grid">
-            <button type="submit" className="btn btn-primary">Registrarse</button>
-          </div>
-        </form>
-      </div>
+    <div className="register-form">
+      <h2>Registro de Usuario</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Nombre:</label>
+          <input
+            type="text"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Apellido:</label>
+          <input
+            type="text"
+            name="apellido"
+            value={formData.apellido}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Teléfono:</label>
+          <input
+            type="text"
+            name="telefono"
+            value={formData.telefono}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Empresa:</label>
+          <input
+            type="text"
+            name="empresa"
+            value={formData.empresa}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Ciudad:</label>
+          <input
+            type="text"
+            name="ciudad"
+            value={formData.ciudad}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">Registrar Usuario</button>
+      </form>
+
+      {message && <p>{message}</p>} {/* Mostrar mensaje de éxito o error */}
     </div>
   );
 }
