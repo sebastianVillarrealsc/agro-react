@@ -3,9 +3,9 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import './UserRegistrationForm.css'; // Asegúrate de que esté el archivo CSS si necesitas estilos
+import './UserRegistrationForm.css'; // Estilos
 
-// Esquema de validación con Yup para todos los campos
+// Esquema de validación con Yup
 const schema = Yup.object().shape({
   nombre: Yup.string().required('El nombre es obligatorio'),
   apellido: Yup.string().required('El apellido es obligatorio'),
@@ -15,43 +15,51 @@ const schema = Yup.object().shape({
   ciudad: Yup.string().required('La ciudad es obligatoria'),
   direccion: Yup.string().required('La dirección es obligatoria'),
   pais: Yup.string().required('El país es obligatorio'),
-  registroRequerido: Yup.string().required('El registro requerido es obligatorio'),
-  registroOfrecido: Yup.string().required('El registro ofrecido es obligatorio'),
+  servicioOfrecido: Yup.string().required('El servicio ofrecido es obligatorio'),
+  servicioRequerido: Yup.string().required('El servicio requerido es obligatorio'),
   capacidadOperativa: Yup.string().required('La capacidad operativa es obligatoria'),
-  imagen: Yup.mixed().required('Debe subir una imagen'),
+  contrasena: Yup.string()
+    .min(6, 'La contraseña debe tener al menos 6 caracteres')
+    .required('La contraseña es obligatoria'),
+  imagen: Yup.mixed()
+    .test('fileType', 'Solo se permiten imágenes (jpg, png)', (value) => {
+      return value && value[0] && ['image/jpeg', 'image/png'].includes(value[0].type);
+    })
+    .required('Debe subir una imagen'),
 });
 
 function UserRegistrationForm() {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
   });
   const [message, setMessage] = useState('');
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append('nombre', data.nombre);
-    formData.append('apellido', data.apellido);
-    formData.append('email', data.email);
-    formData.append('telefono', data.telefono);
-    formData.append('empresa', data.empresa);
-    formData.append('ciudad', data.ciudad);
-    formData.append('direccion', data.direccion);
-    formData.append('pais', data.pais);
-    formData.append('registroRequerido', data.registroRequerido);
-    formData.append('registroOfrecido', data.registroOfrecido);
-    formData.append('capacidadOperativa', data.capacidadOperativa);
-    formData.append('imagen', data.imagen[0]); // Adjuntar la imagen
+    Object.keys(data).forEach((key) => {
+      if (key === 'imagen') {
+        formData.append(key, data[key][0]); // Adjuntar la imagen
+      } else {
+        formData.append(key, data[key]);
+      }
+    });
 
     try {
-      const response = await axios.post('http://localhost:3000/usuarios', formData, {
+      await axios.post('http://localhost:3000/usuarios', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       setMessage('Usuario registrado exitosamente.');
-      reset(); // Reiniciar el formulario
+      reset(); // Reinicia el formulario
+      setTimeout(() => setMessage(''), 5000); // Limpia el mensaje después de 5 segundos
     } catch (error) {
-      setMessage('Error al registrar el usuario.');
+      setMessage(error.response?.data?.message || 'Error al registrar el usuario.');
       console.error('Error al registrar usuario:', error);
     }
   };
@@ -60,78 +68,31 @@ function UserRegistrationForm() {
     <div className="register-form">
       <h2>Registro de Usuario</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-group">
-          <label>Nombre:</label>
-          <input type="text" {...register('nombre')} />
-          {errors.nombre && <p>{errors.nombre.message}</p>}
-        </div>
-        
-        <div className="form-group">
-          <label>Apellido:</label>
-          <input type="text" {...register('apellido')} />
-          {errors.apellido && <p>{errors.apellido.message}</p>}
-        </div>
+        {[
+          { label: 'Nombre', name: 'nombre', type: 'text' },
+          { label: 'Apellido', name: 'apellido', type: 'text' },
+          { label: 'Email', name: 'email', type: 'email' },
+          { label: 'Teléfono', name: 'telefono', type: 'text' },
+          { label: 'Empresa', name: 'empresa', type: 'text' },
+          { label: 'Ciudad', name: 'ciudad', type: 'text' },
+          { label: 'Dirección', name: 'direccion', type: 'text' },
+          { label: 'País', name: 'pais', type: 'text' },
+          { label: 'Servicio Ofrecido', name: 'servicioOfrecido', type: 'text' },
+          { label: 'Servicio Requerido', name: 'servicioRequerido', type: 'text' },
+          { label: 'Capacidad Operativa', name: 'capacidadOperativa', type: 'text' },
+          { label: 'Contraseña', name: 'contrasena', type: 'password' },
+          { label: 'Subir Imagen', name: 'imagen', type: 'file' },
+        ].map((field, idx) => (
+          <div key={idx} className="form-group">
+            <label>{field.label}:</label>
+            <input type={field.type} {...register(field.name)} />
+            {errors[field.name] && <p>{errors[field.name].message}</p>}
+          </div>
+        ))}
 
-        <div className="form-group">
-          <label>Email:</label>
-          <input type="email" {...register('email')} />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Teléfono:</label>
-          <input type="text" {...register('telefono')} />
-          {errors.telefono && <p>{errors.telefono.message}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Empresa:</label>
-          <input type="text" {...register('empresa')} />
-        </div>
-
-        <div className="form-group">
-          <label>Ciudad:</label>
-          <input type="text" {...register('ciudad')} />
-          {errors.ciudad && <p>{errors.ciudad.message}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Dirección:</label>
-          <input type="text" {...register('direccion')} />
-          {errors.direccion && <p>{errors.direccion.message}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>País:</label>
-          <input type="text" {...register('pais')} />
-          {errors.pais && <p>{errors.pais.message}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Registro Requerido:</label>
-          <input type="text" {...register('registroRequerido')} />
-          {errors.registroRequerido && <p>{errors.registroRequerido.message}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Registro Ofrecido:</label>
-          <input type="text" {...register('registroOfrecido')} />
-          {errors.registroOfrecido && <p>{errors.registroOfrecido.message}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Capacidad Operativa:</label>
-          <input type="text" {...register('capacidadOperativa')} />
-          {errors.capacidadOperativa && <p>{errors.capacidadOperativa.message}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Subir Imagen:</label>
-          <input type="file" {...register('imagen')} />
-          {errors.imagen && <p>{errors.imagen.message}</p>}
-        </div>
-
-        <button type="submit" className="btn btn-primary">Registrar Usuario</button>
+        <button type="submit" className="btn btn-primary">
+          Registrar Usuario
+        </button>
       </form>
       {message && <p className="success-message">{message}</p>}
     </div>
