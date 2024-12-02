@@ -1,5 +1,5 @@
+ 
 import React, { useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavigationBar from './components/Navbar';
 import Footer from './components/Footer';
 import LoginForm from './components/LoginForm';
@@ -7,6 +7,7 @@ import UserRegistrationForm from './components/UserRegistrationForm';
 import Cards from './components/Cards';
 import AdvertisementCarousel from './components/AdvertisementCarousel';
 import VerticalCarousel from './components/VerticalCarousel';
+
 import TextColumns from './components/TextColumns';
 import StarPopup from './components/Popup';
 import { AuthContext, AuthProvider } from './authProvider';
@@ -48,6 +49,7 @@ function App() {
                     <TextColumns />
                     <StarPopup />
                   </div>
+
                 }
               />
 
@@ -74,6 +76,7 @@ function App() {
         </div>
       </Router>
     </AuthProvider>
+
   );
 }
 

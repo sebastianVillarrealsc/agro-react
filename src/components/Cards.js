@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Alert, Spinner } from 'react-bootstrap'; // UX mejorada con Spinner
 import axios from '../services/axiosConfig'; // Configuración personalizada de Axios
@@ -6,11 +7,11 @@ import './Cards.css'; // Estilos
 const Cards = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
+
         console.log('Iniciando solicitud GET a /usuarios');
         const response = await axios.get('/usuarios'); // Usamos axiosConfig con token
         console.log('Usuarios recibidos:', response.data);
@@ -24,10 +25,11 @@ const Cards = () => {
           console.error('Error al obtener usuarios:', err.message || err.response?.data?.message);
           setError('Ocurrió un problema al obtener los datos.');
         }
-      } finally {
+      } finally 
         setLoading(false);
       }
     };
+
 
     fetchUsuarios();
   }, []);
@@ -40,9 +42,12 @@ const Cards = () => {
         </Spinner>
       </div>
     );
+
   }
 
+  // Manejar el estado de error
   if (error) {
+
     return (
       <div className="text-center mt-5">
         <Alert variant="danger">{error}</Alert>
@@ -84,11 +89,9 @@ const Cards = () => {
                 </p>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+   
     </div>
   );
 };
 
-export default Cards;
+export default UsuariosList;
