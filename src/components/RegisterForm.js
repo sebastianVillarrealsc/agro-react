@@ -2,112 +2,160 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function RegisterForm() {
-  const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
+    name: '',
     email: '',
-    telefono: '',
-    empresa: '',
-    ciudad: '',
+    password: '',
+    role: 'Proveedor de Insumos', // Valor predeterminado
   });
+  const [userId, setUserId] = useState(null); // ID del usuario registrado
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+  const [changeRoleSuccess, setChangeRoleSuccess] = useState(null);
 
-  const [message, setMessage] = useState('');
+  const rolesPermitidos = [
+    'Publicidad',
+    'Proveedor de Insumos',
+    'Proveedor de Servicios',
+    'Mecenas',
+  ];
 
-  // Manejar los cambios en los campos del formulario
+  // Manejar cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  // Manejar el envío del formulario
+  // Enviar datos al backend
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
     try {
-      const response = await axios.post('http://localhost:3000/usuarios', formData); // Cambia el puerto si es necesario
-      setMessage('Usuario registrado exitosamente.');
-      setFormData({
-        nombre: '',
-        apellido: '',
-        email: '',
-        telefono: '',
-        empresa: '',
-        ciudad: '',
-      }); // Reiniciar el formulario
-    } catch (error) {
-      setMessage('Error al registrar el usuario.');
-      console.error('Error al registrar usuario:', error);
+      const response = await axios.post('http://localhost:3000/usuarios', formData);
+      setSuccess('Registro exitoso. ¡Bienvenido!');
+      setUserId(response.data.id); // Guardar el ID del usuario registrado
+      setFormData({ name: '', email: '', password: '', role: 'Proveedor de Insumos' });
+    } catch (err) {
+      console.error('Error al registrar:', err);
+      setError('Hubo un problema con el registro. Por favor, inténtalo de nuevo.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Cambiar el rol de un usuario registrado
+  const handleChangeRole = async (newRole) => {
+    if (!userId) {
+      setError('Primero debes registrarte para cambiar el rol.');
+      return;
+    }
+
+    setChangeRoleSuccess(null);
+    setError(null);
+
+    try {
+      await axios.patch(`http://localhost:3000/usuarios/${userId}/rol`, { rol: newRole });
+      setChangeRoleSuccess(`Rol cambiado exitosamente a ${newRole}`);
+      setFormData({ ...formData, role: newRole });
+    } catch (err) {
+      console.error('Error al cambiar el rol:', err);
     }
   };
 
   return (
-    <div className="register-form">
-      <h2>Registro de Usuario</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Nombre:</label>
-          <input
-            type="text"
-            name="nombre"
-            value={formData.nombre}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Apellido:</label>
-          <input
-            type="text"
-            name="apellido"
-            value={formData.apellido}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Teléfono:</label>
-          <input
-            type="text"
-            name="telefono"
-            value={formData.telefono}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Empresa:</label>
-          <input
-            type="text"
-            name="empresa"
-            value={formData.empresa}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Ciudad:</label>
-          <input
-            type="text"
-            name="ciudad"
-            value={formData.ciudad}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">Registrar Usuario</button>
-      </form>
+ 
+    <div className="d-flex justify-content-center align-items-center min-vh-100" style={{ backgroundColor: '#d4edda' }}>
+      <div className="card p-4" style={{ width: '100%', maxWidth: '500px', backgroundColor: '#e9ecef' }}>
+        <h2 className="text-center mb-4">Registro</h2>
 
-      {message && <p>{message}</p>} {/* Mostrar mensaje de éxito o error */}
+        {/* Mensajes de éxito o error */}
+        {success && <div className="alert alert-success">{success}</div>}
+        {error && <div className="alert alert-danger">{error}</div>}
+        {changeRoleSuccess && <div className="alert alert-info">{changeRoleSuccess}</div>}
+
+        {/* Formulario de Registro */}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">Nombre</label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Correo Electrónico</label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Contraseña</label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="role" className="form-label">Rol</label>
+            <select
+              className="form-select"
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              {rolesPermitidos.map((role) => (
+                <option key={role} value={role}>
+                  {role}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="d-grid">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? 'Registrando...' : 'Registrarse'}
+            </button>
+          </div>
+        </form>
+
+        {/* Botón para cambiar el rol */}
+        <div className="mt-4">
+          <h5 className="text-center">Cambiar Rol</h5>
+          <div className="d-grid gap-2">
+            {rolesPermitidos.map((role) => (
+              <button
+                key={role}
+                className="btn btn-secondary"
+                onClick={() => handleChangeRole(role)}
+                disabled={!userId || formData.role === role}
+              >
+                {formData.role === role ? `Ya eres ${role}` : `Cambiar a ${role}`}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
