@@ -34,9 +34,13 @@ const NavigationBar = () => {
             </>
           ) : (
             <>
-              {/* Usar Nav.Link para garantizar una navegación fluida */}
+              {/* Redirige a la página de servicios */}
               <Nav.Link as={Link} to="/services" className="navbar-link">
                 Servicios
+              </Nav.Link>
+              {/* Nuevo botón para compra de tokens */}
+              <Nav.Link as={Link} to="/comprar-tokens" className="navbar-link">
+                Comprar Tokens
               </Nav.Link>
               <Button
                 variant="outline-danger"

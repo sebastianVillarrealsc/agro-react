@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Spinner } from 'react-bootstrap'; // UX mejorada con Spinner
-import axios from '../services/axiosConfig'; // Configuración personalizada de Axios
-import './Cards.css'; // Estilos
+import { Alert, Spinner } from 'react-bootstrap';
+import axios from '../services/axiosConfig';
+import './Cards.css';
 
 const Cards = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [mostrarMas, setMostrarMas] = useState({}); // Estado para controlar las cards desplegadas
 
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
         console.log('Iniciando solicitud GET a /usuarios');
-        const response = await axios.get('/usuarios'); // Usamos axiosConfig con token
+        const response = await axios.get('/usuarios');
         console.log('Usuarios recibidos:', response.data);
 
         setUsuarios(response.data);
@@ -31,6 +32,13 @@ const Cards = () => {
 
     fetchUsuarios();
   }, []);
+
+  const toggleMostrarMas = (id) => {
+    setMostrarMas((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
 
   if (loading) {
     return (
@@ -68,7 +76,7 @@ const Cards = () => {
                 alt={usuario.nombre || 'Imagen predeterminada'}
                 style={{ height: '200px', objectFit: 'cover' }}
               />
-              {/* Información del usuario */}
+              {/* Información básica */}
               <div className="card-body">
                 <h5 className="card-title text-primary">
                   {usuario.nombre || 'Usuario sin nombre'}
@@ -79,9 +87,31 @@ const Cards = () => {
                 <p>
                   <strong>Rol:</strong> {usuario.rol || 'No asignado'}
                 </p>
-                <p>
-                  <strong>Balance de Tokens:</strong> {usuario.balanceTokens || 0}
-                </p>
+
+                {mostrarMas[usuario.id] && (
+                  <div className="card-text">
+                    {/* Información adicional */}
+                    <p>
+                      <strong>Email:</strong> {usuario.email || 'No especificado'}
+                    </p>
+                    <p>
+                      <strong>Teléfono:</strong> {usuario.telefono || 'No especificado'}
+                    </p>
+                    <p>
+                      <strong>Dirección:</strong> {usuario.direccion || 'No especificada'}
+                    </p>
+                    <p>
+                      <strong>Balance de Tokens:</strong> {usuario.balanceTokens || 0}
+                    </p>
+                  </div>
+                )}
+
+                <button
+                  className="btn btn-primary mt-2"
+                  onClick={() => toggleMostrarMas(usuario.id)}
+                >
+                  {mostrarMas[usuario.id] ? 'Mostrar menos' : 'Mostrar más'}
+                </button>
               </div>
             </div>
           </div>

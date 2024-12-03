@@ -1,5 +1,7 @@
 import axios from 'axios'; // Asegúrate de que axios esté importado correctamente
 
+
+
 // Crear una instancia de Axios configurada
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:3000', // Cambia esta URL si es necesario

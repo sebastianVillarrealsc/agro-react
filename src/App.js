@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {  useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavigationBar from './components/Navbar';
 import Footer from './components/Footer';
@@ -10,6 +10,9 @@ import VerticalCarousel from './components/VerticalCarousel';
 import TextColumns from './components/TextColumns';
 import StarPopup from './components/Popup';
 import { AuthContext, AuthProvider } from './authProvider';
+import TokenManagement from './components/TokenManagement/TokenManagement';
+
+
 import './App.css';
 
 function App() {
@@ -63,6 +66,16 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Cards />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Nueva ruta para la gestión de tokens */}
+              <Route
+                path="/comprar-tokens"
+                element={
+                  <ProtectedRoute>
+                    <TokenManagement />
                   </ProtectedRoute>
                 }
               />
