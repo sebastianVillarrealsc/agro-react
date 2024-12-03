@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function RegisterForm() {
-  const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
@@ -63,11 +62,11 @@ function RegisterForm() {
       setFormData({ ...formData, role: newRole });
     } catch (err) {
       console.error('Error al cambiar el rol:', err);
-      setError('Hubo un problema al cambiar el rol. Por favor, inténtalo de nuevo.');
     }
   };
 
   return (
+ 
     <div className="d-flex justify-content-center align-items-center min-vh-100" style={{ backgroundColor: '#d4edda' }}>
       <div className="card p-4" style={{ width: '100%', maxWidth: '500px', backgroundColor: '#e9ecef' }}>
         <h2 className="text-center mb-4">Registro</h2>
@@ -156,6 +155,7 @@ function RegisterForm() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }

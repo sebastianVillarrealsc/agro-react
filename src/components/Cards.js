@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
 import axios from '../services/axiosConfig';
@@ -6,12 +7,11 @@ import './Cards.css';
 const Cards = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [mostrarMas, setMostrarMas] = useState({}); // Estado para controlar las cards desplegadas
 
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
+
         console.log('Iniciando solicitud GET a /usuarios');
         const response = await axios.get('/usuarios');
         console.log('Usuarios recibidos:', response.data);
@@ -29,6 +29,7 @@ const Cards = () => {
         setLoading(false);
       }
     };
+
 
     fetchUsuarios();
   }, []);
@@ -48,9 +49,12 @@ const Cards = () => {
         </Spinner>
       </div>
     );
+
   }
 
+  // Manejar el estado de error
   if (error) {
+
     return (
       <div className="text-center mt-5">
         <Alert variant="danger">{error}</Alert>
@@ -114,11 +118,10 @@ const Cards = () => {
                 </button>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+            </div>
+            
     </div>
   );
 };
 
-export default Cards;
+export default UsuariosList;
