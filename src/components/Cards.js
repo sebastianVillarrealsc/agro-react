@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
 import axios from '../services/axiosConfig';
@@ -25,7 +26,7 @@ const Cards = () => {
           console.error('Error al obtener usuarios:', err.message || err.response?.data?.message);
           setError('Ocurrió un problema al obtener los datos.');
         }
-      } finally {
+      } finally 
         setLoading(false);
       }
     };
@@ -118,8 +119,9 @@ const Cards = () => {
                 </button>
               </div>
             </div>
-            </div>
-            
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

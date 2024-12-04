@@ -1,6 +1,11 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, {  useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+=======
+ 
+import React, { useContext } from 'react';
+>>>>>>> 611652c16e89c9692038ea97ac246cf77eed4fb4
 =======
  
 import React, { useContext } from 'react';
