@@ -14,13 +14,17 @@ const TokenManagement = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('userId'); // ID del usuario autenticado
+        const token = localStorage.getItem('token'); // ID del usuario autenticado
         const balanceResponse = await axios.get(`/usuarios/balance`, {
           headers: {
-              Authorization: `Bearer ${token}`, // Esquema Bearer
+            Authorization: `Bearer ${token}`, // Esquema Bearer
           },
-      });
-        const transaccionesResponse = await axios.get(`/transacciones/${userId}`);
+        });
+        const transaccionesResponse = await axios.get(`/transacciones`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Esquema Bearer
+          },
+        });
         setBalance(balanceResponse.data.balanceTokens);
         setTransacciones(transaccionesResponse.data);
       } catch (err) {
@@ -36,7 +40,7 @@ const TokenManagement = () => {
   // Manejar la compra de tokens
   const handleComprarTokens = async () => {
     try {
-      const userId = localStorage.getItem('userId'); // ID del usuario autenticado
+      const userId = localStorage.getItem('token'); // ID del usuario autenticado
       await axios.post('/tokens/comprar', { usuarioId: userId, cantidad: parseInt(cantidad) });
       alert('¡Tokens comprados con éxito!');
       setCantidad(''); // Resetear el formulario

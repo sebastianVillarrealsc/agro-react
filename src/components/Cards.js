@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
 import axios from '../services/axiosConfig';
@@ -8,13 +6,15 @@ import './Cards.css';
 const Cards = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [mostrarMas, setMostrarMas] = useState({});
 
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
 
         console.log('Iniciando solicitud GET a /usuarios');
-        const response = await axios.get('/usuarios');
+        const response = await axios.get('/usuarios/all');
         console.log('Usuarios recibidos:', response.data);
 
         setUsuarios(response.data);
@@ -26,7 +26,7 @@ const Cards = () => {
           console.error('Error al obtener usuarios:', err.message || err.response?.data?.message);
           setError('Ocurrió un problema al obtener los datos.');
         }
-      } finally 
+      } finally {
         setLoading(false);
       }
     };
@@ -74,7 +74,7 @@ const Cards = () => {
               <img
                 src={
                   usuario.imagenUrl
-                    ? `http://localhost:3000/uploads/${usuario.imagenUrl}`
+                    ? `http://localhost:3300/uploads/${usuario.imagenUrl}`
                     : '/default/logo.png'
                 }
                 className="card-img-top"
@@ -126,4 +126,4 @@ const Cards = () => {
   );
 };
 
-export default UsuariosList;
+export default Cards;

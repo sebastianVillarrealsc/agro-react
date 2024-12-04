@@ -1,15 +1,5 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 import React, {  useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-=======
- 
-import React, { useContext } from 'react';
->>>>>>> 611652c16e89c9692038ea97ac246cf77eed4fb4
-=======
- 
-import React, { useContext } from 'react';
->>>>>>> 611652c16e89c9692038ea97ac246cf77eed4fb4
 import NavigationBar from './components/Navbar';
 import Footer from './components/Footer';
 import LoginForm from './components/LoginForm';
@@ -17,12 +7,10 @@ import UserRegistrationForm from './components/UserRegistrationForm';
 import Cards from './components/Cards';
 import AdvertisementCarousel from './components/AdvertisementCarousel';
 import VerticalCarousel from './components/VerticalCarousel';
-
 import TextColumns from './components/TextColumns';
 import StarPopup from './components/Popup';
-import { AuthContext, AuthProvider } from './authProvider';
 import TokenManagement from './components/TokenManagement/TokenManagement';
-
+import { AuthContext } from './AuthContext';
 
 import './App.css';
 
@@ -34,7 +22,6 @@ function App() {
   };
 
   return (
-    <AuthProvider>
       <Router>
         <div className="App d-flex flex-column min-vh-100">
           {/* Barra de navegación */}
@@ -98,8 +85,6 @@ function App() {
           <Footer />
         </div>
       </Router>
-    </AuthProvider>
-
   );
 }
 

@@ -23,7 +23,7 @@ function LoginForm() {
 
     try {
       // Llama al endpoint de login
-      const response = await axios.post('http://localhost:3000/usuarios/auth/login', formData, {
+      const response = await axios.post('http://localhost:3300/auth/login', formData, {
         headers: { 'Content-Type': 'application/json' },
       });
 
