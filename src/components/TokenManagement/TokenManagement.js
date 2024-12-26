@@ -40,16 +40,26 @@ const TokenManagement = () => {
   // Manejar la compra de tokens
   const handleComprarTokens = async () => {
     try {
-      const userId = localStorage.getItem('token'); // ID del usuario autenticado
-      await axios.post('/tokens/comprar', { usuarioId: userId, cantidad: parseInt(cantidad) });
-      alert('¡Tokens comprados con éxito!');
-      setCantidad(''); // Resetear el formulario
-      setBalance(balance + parseInt(cantidad)); // Actualizar balance local
+      const token = localStorage.getItem('token'); // Token del usuario autenticado
+      const response = await axios.post(
+        '/tokens/comprar',
+        { usuarioId: localStorage.getItem('userId'), cantidad: parseInt(cantidad) },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      alert(response.data.mensaje); // Mostrar mensaje del backend
+      setCantidad(''); // Limpiar el formulario
+      setBalance(response.data.balanceActual); // Actualizar el balance en la interfaz
     } catch (err) {
-      console.error('Error al comprar tokens:', err.message || err.response?.data?.message);
-      setError('Ocurrió un problema al procesar la compra.');
+      console.error('Error al comprar tokens:', err.response?.data?.message || err.message);
+      setError(err.response?.data?.message || 'Ocurrió un problema al procesar la compra.');
     }
   };
+  
 
   if (loading) {
     return (

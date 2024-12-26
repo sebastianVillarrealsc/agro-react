@@ -49,18 +49,19 @@ function UserRegistrationForm() {
       }
     });
 
+    console.log('Datos enviados:', Object.fromEntries(formData.entries())); // Agregar un log para depurar
+
     try {
-      await axios.post('http://localhost:3000/usuarios', formData, {
+      await axios.post('http://localhost:3300/usuarios', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       setMessage('Usuario registrado exitosamente.');
       reset(); // Reinicia el formulario
-      setTimeout(() => setMessage(''), 5000); // Limpia el mensaje después de 5 segundos
     } catch (error) {
+      console.error('Error al registrar usuario:', error.response?.data || error.message);
       setMessage(error.response?.data?.message || 'Error al registrar el usuario.');
-      console.error('Error al registrar usuario:', error);
     }
   };
 

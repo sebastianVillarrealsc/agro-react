@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Spinner } from 'react-bootstrap';
+import { Alert, Spinner, Form, Button } from 'react-bootstrap';
 import axios from '../services/axiosConfig';
 import './Cards.css';
 
@@ -7,39 +7,73 @@ const Cards = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [mostrarMas, setMostrarMas] = useState({});
+  const [ciudad, setCiudad] = useState('');
+  const [servicio, setServicio] = useState('');
+  const [ubicacion, setUbicacion] = useState('');
 
+  // Obtener todos los usuarios al cargar
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
-
-        console.log('Iniciando solicitud GET a /usuarios');
         const response = await axios.get('/usuarios/all');
-        console.log('Usuarios recibidos:', response.data);
-
         setUsuarios(response.data);
       } catch (err) {
-        if (err.response && err.response.status === 401) {
-          console.error('Error de autenticación:', err.response.data.message);
-          setError('No estás autorizado. Por favor, inicia sesión nuevamente.');
-        } else {
-          console.error('Error al obtener usuarios:', err.message || err.response?.data?.message);
-          setError('Ocurrió un problema al obtener los datos.');
-        }
+        handleError(err);
       } finally {
         setLoading(false);
       }
     };
 
-
     fetchUsuarios();
   }, []);
 
-  const toggleMostrarMas = (id) => {
-    setMostrarMas((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
+  // Manejar errores
+  const handleError = (err) => {
+    if (err.response && err.response.status === 401) {
+      setError('No estás autorizado. Por favor, inicia sesión nuevamente.');
+    } else {
+      setError('Ocurrió un problema al obtener los datos.');
+    }
+  };
+
+  // Filtrar usuarios por servicio y ubicación
+  const handleFiltrarPorCategoria = async () => {
+    if (!servicio.trim()) {
+      setError('Por favor, ingresa un servicio para buscar.');
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get('/usuarios/buscar-por-categoria', {
+        params: { servicio, ubicacion },
+      });
+      setUsuarios(response.data);
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filtrar usuarios por ciudad
+  const handleFiltrarPorCiudad = async () => {
+    if (!ciudad.trim()) {
+      setError('Por favor, ingresa una ciudad para filtrar.');
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get('/usuarios/filtrar-por-ciudad', {
+        params: { ciudad },
+      });
+      setUsuarios(response.data);
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -50,12 +84,9 @@ const Cards = () => {
         </Spinner>
       </div>
     );
-
   }
 
-  // Manejar el estado de error
   if (error) {
-
     return (
       <div className="text-center mt-5">
         <Alert variant="danger">{error}</Alert>
@@ -66,11 +97,51 @@ const Cards = () => {
   return (
     <div className="container mt-4">
       <h2 className="mb-4 text-center">Usuarios Registrados</h2>
+
+      {/* Barra de búsqueda por servicio y ubicación */}
+      <div className="mb-4">
+        <Form className="d-flex justify-content-center">
+          <Form.Control
+            type="text"
+            placeholder="Ingresa un servicio"
+            value={servicio}
+            onChange={(e) => setServicio(e.target.value)}
+            style={{ maxWidth: '300px', marginRight: '10px' }}
+          />
+          <Form.Control
+            type="text"
+            placeholder="Ingresa una ubicación (opcional)"
+            value={ubicacion}
+            onChange={(e) => setUbicacion(e.target.value)}
+            style={{ maxWidth: '300px', marginRight: '10px' }}
+          />
+          <Button variant="primary" onClick={handleFiltrarPorCategoria}>
+            Buscar por Servicio
+          </Button>
+        </Form>
+      </div>
+
+      {/* Filtro por ciudad */}
+      <div className="mb-4">
+        <Form className="d-flex justify-content-center">
+          <Form.Control
+            type="text"
+            placeholder="Ingresa una ciudad para filtrar"
+            value={ciudad}
+            onChange={(e) => setCiudad(e.target.value)}
+            style={{ maxWidth: '300px', marginRight: '10px' }}
+          />
+          <Button variant="primary" onClick={handleFiltrarPorCiudad}>
+            Filtrar por Ciudad
+          </Button>
+        </Form>
+      </div>
+
+      {/* Tarjetas de usuarios */}
       <div className="row">
         {usuarios.map((usuario) => (
           <div className="col-md-4 mb-4" key={usuario.id}>
             <div className="card h-100 shadow-sm">
-              {/* Imagen de usuario */}
               <img
                 src={
                   usuario.imagenUrl
@@ -81,42 +152,13 @@ const Cards = () => {
                 alt={usuario.nombre || 'Imagen predeterminada'}
                 style={{ height: '200px', objectFit: 'cover' }}
               />
-              {/* Información básica */}
               <div className="card-body">
-                <h5 className="card-title text-primary">
-                  {usuario.nombre || 'Usuario sin nombre'}
-                </h5>
                 <p>
                   <strong>Empresa:</strong> {usuario.empresa || 'No especificada'}
                 </p>
                 <p>
                   <strong>Rol:</strong> {usuario.rol || 'No asignado'}
                 </p>
-
-                {mostrarMas[usuario.id] && (
-                  <div className="card-text">
-                    {/* Información adicional */}
-                    <p>
-                      <strong>Email:</strong> {usuario.email || 'No especificado'}
-                    </p>
-                    <p>
-                      <strong>Teléfono:</strong> {usuario.telefono || 'No especificado'}
-                    </p>
-                    <p>
-                      <strong>Dirección:</strong> {usuario.direccion || 'No especificada'}
-                    </p>
-                    <p>
-                      <strong>Balance de Tokens:</strong> {usuario.balanceTokens || 0}
-                    </p>
-                  </div>
-                )}
-
-                <button
-                  className="btn btn-primary mt-2"
-                  onClick={() => toggleMostrarMas(usuario.id)}
-                >
-                  {mostrarMas[usuario.id] ? 'Mostrar menos' : 'Mostrar más'}
-                </button>
               </div>
             </div>
           </div>

@@ -1,5 +1,3 @@
-
-/* App.css */
 /* App.css */
 
 /* Estilos globales */
@@ -15,10 +13,17 @@ body, html {
   text-align: center;
 }
 
+h1 {
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #ffffff;
+  font-size: 36px;
+}
+
 .home-page {
   padding: 20px;
   background-color: #ffffff; /* Color de fondo para la página de inicio */
 }
+
 
 .services-page {
   padding: 20px;
@@ -29,6 +34,17 @@ body, html {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.col-md-6 {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items:flex-end;
+
+} 
 
 footer {
   background-color: #333;

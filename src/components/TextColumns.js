@@ -13,8 +13,8 @@ const TextColumns = () => {
     <div className="container mt-4">
       <div className="row border main-section">
         <div className="col-md-12 text-section">
-          <h1 className="main-title">LUGAR DE ENCUENTRO ENTRE PRESTADORES Y USUARIOS DE SERVICIOS RURALES</h1>
-          <h2 className="sub-title">Sumate a la nueva forma de hacer agronegocios</h2>
+          <h2 className="main-title">LUGAR DE ENCUENTRO ENTRE PRESTADORES Y USUARIOS DE SERVICIOS RURALES</h2>
+          <h2 className="sub-title">Sumate a la nueva forma de hacer Agronegocios</h2>
           <div className="button-container">
             {/* Iconos personalizados en cada botón */}
             <button className="icon-button" onClick={() => handleSearchByCategory('siembra')}>
@@ -54,20 +54,6 @@ const TextColumns = () => {
             </button>
           </div>
         </div>
-      </div>
-
-      {/* Segunda sección */}
-      <div className="row border mt-3">
-        <div className="col-md-12 text-section">
-          <h1>Conoce nuestra página</h1>
-          <h2>Al inscribirse el usuario podrá darse de alta como proveedor de servicios o requerir los mismos</h2>
-          <a href="/contact" className="btn btn-primary">Navega a la página de contacto e inscríbete</a>
-        </div>
-      </div>
-
-      {/* Columna extra */}
-      <div className="row border mt-3">
-        <div className="col border">Columna 3</div>
       </div>
     </div>
   );

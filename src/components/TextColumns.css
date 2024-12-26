@@ -36,7 +36,7 @@
   justify-content: center;
   width: 80px;
   height: 80px;
-  background-color: #2980b9;
+  background-color: #4400ff;
   border: none;
   border-radius: 50%;
   color: white;
@@ -52,7 +52,7 @@
 }
 
 .icon-button:hover {
-  background-color: #3498db;
+  background-color: #34db5e;
   transform: scale(1.1); /* Efecto de agrandado */
 }
 

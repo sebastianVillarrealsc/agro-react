@@ -4,7 +4,7 @@ import './AdvertisementCarousel.css'; // Importamos el archivo CSS para estilos 
 
 const AdvertisementCarousel = () => {
   return (
-    <div className="col-md-8"> {/* Contenedor del carrusel horizontal ocupando 8 columnas */}
+    <div className="col-md-12"> {/* Contenedor del carrusel horizontal ocupando 8 columnas */}
       <Carousel>
         <Carousel.Item>
           <img
@@ -37,6 +37,48 @@ const AdvertisementCarousel = () => {
           <img
             className="d-block w-100"
             src={process.env.PUBLIC_URL + '/assets/Servicios/Drone1.jpg'}
+            alt="drone volando "
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={process.env.PUBLIC_URL + '/assets/Servicios/1.jpg'}
+            alt="drone volando "
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={process.env.PUBLIC_URL + '/assets/Servicios/2.jpg'}
+            alt="drone volando "
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={process.env.PUBLIC_URL + '/assets/Servicios/3.jpg'}
+            alt="drone volando "
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={process.env.PUBLIC_URL + '/assets/Servicios/4.jpg'}
+            alt="drone volando "
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={process.env.PUBLIC_URL + '/assets/Servicios/5.jpg'}
+            alt="drone volando "
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={process.env.PUBLIC_URL + '/assets/Servicios/6.jpg'}
             alt="drone volando "
           />
         </Carousel.Item>

@@ -1,4 +1,4 @@
-import React, {  useContext } from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavigationBar from './components/Navbar';
 import Footer from './components/Footer';
@@ -6,85 +6,73 @@ import LoginForm from './components/LoginForm';
 import UserRegistrationForm from './components/UserRegistrationForm';
 import Cards from './components/Cards';
 import AdvertisementCarousel from './components/AdvertisementCarousel';
-import VerticalCarousel from './components/VerticalCarousel';
 import TextColumns from './components/TextColumns';
+import TextColumns2 from './components/TextColumns2';
 import StarPopup from './components/Popup';
+import Weather from './components/Weather';
+import EditarUsuario from './components/EditarUsuario'; // Verificar el path correcto
 import TokenManagement from './components/TokenManagement/TokenManagement';
 import { AuthContext } from './AuthContext';
-
 import './App.css';
 
 function App() {
-  // Validación de autenticación desde el contexto
   const ProtectedRoute = ({ children }) => {
     const { isAuthenticated } = useContext(AuthContext);
     return isAuthenticated ? children : <Navigate to="/login" />;
   };
 
   return (
-      <Router>
-        <div className="App d-flex flex-column min-vh-100">
-          {/* Barra de navegación */}
-          <NavigationBar />
-
-          {/* Contenido principal */}
-          <main className="flex-grow-1">
-            <Routes>
-              {/* Página de inicio */}
-              <Route
-                path="/"
-                element={
-                  <div className="home-page">
-                    <h1>Bienvenido a AgroReact</h1>
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <AdvertisementCarousel />
-                        </div>
-                        <div className="col-md-6 mt-3 mt-md-0">
-                          <VerticalCarousel />
-                        </div>
-                      </div>
-                    </div>
-                    <TextColumns />
-                    <StarPopup />
+    <Router>
+      <div className="App d-flex flex-column min-vh-100">
+        <NavigationBar />
+        <main className="flex-grow-1">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div className="home-page">
+                  <h1>Bienvenido a AgroReact</h1>
+                  <TextColumns />
+                  <div className="container">
+                    <AdvertisementCarousel />
                   </div>
-
-                }
-              />
-
-              {/* Ruta para el login */}
-              <Route path="/login" element={<LoginForm />} />
-
-              {/* Ruta para el registro de usuarios */}
-              <Route path="/register" element={<UserRegistrationForm />} />
-
-              {/* Ruta protegida para la página de servicios */}
-              <Route
-                path="/services"
-                element={
-                  <ProtectedRoute>
-                    <Cards />
-                  </ProtectedRoute>
-                }
-              />
-
-              {/* Nueva ruta para la gestión de tokens */}
-              <Route
-                path="/comprar-tokens"
-                element={
-                  <ProtectedRoute>
-                    <TokenManagement />
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </main>
-
-          {/* Pie de página */}
-          <Footer />
-        </div>
-      </Router>
+                  <TextColumns2 />
+                  <StarPopup />
+                  <Weather />
+                </div>
+              }
+            />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<UserRegistrationForm />} />
+            <Route
+              path="/services"
+              element={
+                <ProtectedRoute>
+                  <Cards />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/editar-usuario/:id"
+              element={
+                <ProtectedRoute>
+                  <EditarUsuario />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/comprar-tokens"
+              element={
+                <ProtectedRoute>
+                  <TokenManagement />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

@@ -4,7 +4,7 @@ import axios from 'axios'; // Asegúrate de que axios esté importado correctame
 
 // Crear una instancia de Axios configurada
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3300', // Cambia esta URL si es necesario
+  baseURL: process.env.React_APP_BACKEND_URL ||'http://localhost:3300', // Cambia esta URL si es necesario
 });
 axiosInstance.interceptors.request.use(
   (config) => {

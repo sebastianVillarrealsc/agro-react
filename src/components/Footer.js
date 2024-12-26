@@ -9,7 +9,7 @@ const Footer = () => {
         <Row>
           <Col md={4}>
             <h5>Acerca de Nosotros</h5>
-            <p>Somos una empresa dedicada a...</p>
+            <p>Somos una empresa dedicada a los Agronegocios</p>
           </Col>
           <Col md={4}>
             <h5>Enlaces Útiles</h5>
